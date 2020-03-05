@@ -7,7 +7,8 @@ import io.appium.java_client.android.AndroidElement;
 import io.appium.java_client.touch.offset.PointOption;
 
 import org.openqa.selenium.Dimension;
- 
+import org.openqa.selenium.WebElement;
+
 import java.time.Duration;
  
 import static io.appium.java_client.touch.TapOptions.tapOptions;
@@ -33,22 +34,22 @@ public class MobileActions {
     //Tap to an element for 250 milliseconds
     public void tapByElement (AndroidElement androidElement) {
         new TouchAction(driver)
-                .tap(tapOptions().withElement(element(androidElement)))
-                .waitAction(waitOptions(Duration.ofMillis(0))).perform();
+                .tap((WebElement) tapOptions().withElement(element(androidElement)))
+                .waitAction().perform();
     }
  
     //Tap by coordinates
     public void tapByCoordinates (int x,  int y) {
         new TouchAction(driver)
-                .tap(point(x,y))
-                .waitAction(waitOptions(Duration.ofMillis(250))).perform();
+                .tap((WebElement) point(x,y))
+                .waitAction().perform();
     }
  
     //Press by element
     public void pressByElement (AndroidElement element, long seconds) {
         new TouchAction(driver)
-                .press(element(element))
-                .waitAction(waitOptions(ofSeconds(seconds)))
+                .press((WebElement) element(element))
+                .waitAction()
                 .release()
                 .perform();
     }
@@ -56,8 +57,8 @@ public class MobileActions {
     //Press by coordinates
     public void pressByCoordinates (int x, int y, long seconds) {
         new TouchAction(driver)
-                .press(point(x,y))
-                .waitAction(waitOptions(ofSeconds(seconds)))
+                .press((WebElement) point(x,y))
+                .waitAction()
                 .release()
                 .perform();
     }
@@ -78,7 +79,7 @@ public class MobileActions {
 
       //  new TouchAction(driver).press(391, 1171).waitAction(Duration.ofMillis(418)).moveTo(311, 293).release().perform();
  
-        new TouchAction(driver).press(PointOption.point(715, 1781)).waitAction(waitOptions(ofMillis(1066))).moveTo(PointOption.point(681, 837)).release().perform();        
+        new TouchAction(driver).press((WebElement) PointOption.point(715, 1781)).waitAction().moveTo((WebElement) PointOption.point(681, 837)).release().perform();        
       //  new TouchAction(driver).press(PointOption.point(180, 200)).waitAction(waitOptions(ofMillis(1066))).moveTo(PointOption.point(180, 220)).release().perform();        
 
     }
@@ -91,9 +92,9 @@ public class MobileActions {
         int endPoint = (int) (size.height * endPercentage);
  
         new TouchAction(driver)
-                .press(point(anchor, startPoint))
-                .waitAction(waitOptions(ofMillis(2000)))
-                .moveTo(point(anchor, endPoint))
+                .press((WebElement) point(anchor, startPoint))
+                .waitAction()
+                .moveTo((WebElement) point(anchor, endPoint))
                 .release().perform();
     }
  
@@ -106,9 +107,9 @@ public class MobileActions {
         int endY = endElement.getLocation().getY() + (endElement.getSize().getHeight() / 2);
  
         new TouchAction(driver)
-                .press(point(startX,startY))
-                .waitAction(waitOptions(ofMillis(1000)))
-                .moveTo(point(endX, endY))
+                .press((WebElement) point(startX,startY))
+                .waitAction()
+                .moveTo((WebElement) point(endX, endY))
                 .release().perform();
     }
     
@@ -116,8 +117,8 @@ public class MobileActions {
     //Multitouch action by using an android element
     public void multiTouchByElement (AndroidElement androidElement) {
         TouchAction press = new TouchAction(driver)
-                .press(element(androidElement))
-                .waitAction(waitOptions(ofSeconds(1)))
+                .press((WebElement) element(androidElement))
+                .waitAction()
                 .release();
  
         new MultiTouchAction(driver)
